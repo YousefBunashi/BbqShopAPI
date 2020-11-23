@@ -31,6 +31,15 @@ app.post("/bbqs", (req, res) => {
   bbqs.push(newBbq);
   res.status(201).json(newBbq);
 });
+app.put("/bbqs/:bbqId", (req, res) => {
+  const { bbqId } = req.params;
+  const foundBbq = bbqs.find((cookie) => cookie.id === +bbqId);
+  if (foundBbq) {
+    for (const key in req.body) foundBbq[key] = req.body[key];
+  } else {
+    res.status(404).json({ message: "Bbq not found" });
+  }
+});
 
 app.listen(8000, () => {
   console.log("The application is jogingy on localhost:8000");
