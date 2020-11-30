@@ -1,5 +1,3 @@
-let bbqs = require("../bbqs");
-const slugify = require("slugify");
 const { Bbq } = require("../db/models");
 
 exports.fetchBbq = async (bbqId, next) => {

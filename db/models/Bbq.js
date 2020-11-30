@@ -20,10 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: 1,
       },
-      image: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
   });
 
