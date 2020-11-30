@@ -13,6 +13,11 @@ exports.fetchBbq = async (bbqId, next) => {
 
 exports.bbqCreate = async (req, res, next) => {
   try {
+    if (req.file) {
+      req.body.image = `${req.protocol}://${req.get("host")}/media/${
+        req.file.filename
+      }`;
+    }
     const newBbq = await Bbq.create(req.body);
     res.status(201).json(newBbq);
   } catch (error) {
@@ -31,6 +36,11 @@ exports.bbqDelete = async (req, res) => {
 
 exports.bbqUpdate = async (req, res) => {
   try {
+    if (req.file) {
+      req.body.image = `${req.protocol}://${req.get("host")}/media/${
+        req.file.filename
+      }`;
+    }
     await req.bbq.update(req.body);
     res.status(204).end();
   } catch (err) {

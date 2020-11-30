@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./db/models");
 const cors = require("cors");
 const SequelizeSlugify = require("sequelize-slugify");
+const path = require("path");
 
 const bodyParser = require("body-parser");
 
@@ -15,6 +16,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 app.use("/bbqs", bbqRoutes);
+app.use("/media", express.static(path.join(__dirname, "media")));
 
 // Not found path
 app.use((req, res, next) => {
@@ -28,6 +30,8 @@ app.use((err, req, res, next) => {
     message: err.message || "Internal Server Error",
   });
 });
+
+console.log("hii", path.join(__dirname, "media"));
 
 const run = async () => {
   try {
