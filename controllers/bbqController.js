@@ -8,7 +8,6 @@ exports.fetchBbq = async (bbqId, next) => {
     next(error);
   }
 };
-
 exports.bbqCreate = async (req, res, next) => {
   try {
     if (req.file) {
@@ -16,13 +15,13 @@ exports.bbqCreate = async (req, res, next) => {
         req.file.filename
       }`;
     }
+    req.body.burgerId = req.params.burgerId;
     const newBbq = await Bbq.create(req.body);
     res.status(201).json(newBbq);
   } catch (error) {
     next(error);
   }
 };
-
 exports.bbqDelete = async (req, res) => {
   try {
     await req.bbq.destroy();

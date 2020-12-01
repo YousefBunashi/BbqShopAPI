@@ -16,6 +16,7 @@ exports.burgerCreate = async (req, res, next) => {
         req.file.filename
       }`;
     }
+
     const newBurger = await Burger.create(req.body);
     res.status(201).json(newBurger);
   } catch (error) {
@@ -23,33 +24,16 @@ exports.burgerCreate = async (req, res, next) => {
   }
 };
 
-// exports.burgerDelete = async (req, res) => {
-//   try {
-//     await req.burger.destroy();
-//     res.status(204).end();
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
-// exports.burgerUpdate = async (req, res) => {
-//   try {
-//     if (req.file) {
-//       req.body.image = `${req.protocol}://${req.get("host")}/media/${
-//         req.file.filename
-//       }`;
-//     }
-//     await req.burger.update(req.body);
-//     res.status(204).end();
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
 exports.burgerList = async (req, res, next) => {
   try {
     const burgers = await Burger.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
+      attributes: ["id", "name"],
+      include: [
+        {
+          model: Cookie,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+        },
+      ],
     });
     res.json(burgers);
   } catch (error) {

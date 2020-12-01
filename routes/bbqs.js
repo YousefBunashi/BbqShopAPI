@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../middleware/multer");
 const {
-  bbqCreate,
   bbqList,
   bbqUpdate,
   bbqDelete,
@@ -22,9 +21,6 @@ router.param("bbqId", async (req, res, next, bbqId) => {
 });
 // bbq List
 router.get("/", bbqList);
-
-// bbq Create
-router.post("/", upload.single("image"), bbqCreate);
 
 // bbq Update
 router.put("/:bbqId", upload.single("image"), bbqUpdate);
