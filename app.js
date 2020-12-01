@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 
 // Routes
 const bbqRoutes = require("./routes/bbqs");
+const burgerRoutes = require("./routes/burgers");
 
 const app = express();
 
@@ -15,6 +16,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use("/burgers", burgerRoutes);
 app.use("/bbqs", bbqRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 
