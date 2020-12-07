@@ -1,4 +1,4 @@
-const { Bbq } = require("../db/models");
+const { Bbq, Burger } = require("../db/models");
 
 exports.fetchBbq = async (bbqId, next) => {
   try {
@@ -48,7 +48,12 @@ exports.bbqUpdate = async (req, res) => {
 exports.bbqList = async (req, res, next) => {
   try {
     const bbqs = await Bbq.findAll({
-      attributes: { exclude: ["createdAt", "updatedAt"] },
+      attributes: { exclude: ["burgerId", "createdAt", "updatedAt"] },
+      include: {
+        model: Burger,
+        as: "burger",
+        attributes: ["name"],
+      },
     });
     res.json(bbqs);
   } catch (error) {

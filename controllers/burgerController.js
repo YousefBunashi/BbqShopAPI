@@ -1,4 +1,5 @@
-const { Burger } = require("../db/models");
+const { Burger, Bbq } = require("../db/models");
+const { bbqCreate } = require("./bbqController");
 
 exports.fetchBurger = async (burgerId, next) => {
   try {
@@ -27,13 +28,12 @@ exports.burgerCreate = async (req, res, next) => {
 exports.burgerList = async (req, res, next) => {
   try {
     const burgers = await Burger.findAll({
-      attributes: ["id", "name"],
-      include: [
-        {
-          model: Cookie,
-          attributes: { exclude: ["createdAt", "updatedAt"] },
-        },
-      ],
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+      include: {
+        model: Bbq,
+        as: "bbqs",
+        attributes: ["id"],
+      },
     });
     res.json(burgers);
   } catch (error) {

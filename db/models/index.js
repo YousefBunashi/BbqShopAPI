@@ -45,5 +45,9 @@ db.Sequelize = Sequelize;
 
 // Relations
 db.Burger.hasMany(db.Bbq, { as: "bbqs", foreignKey: "burgerId" });
+db.Bbq.belongsTo(db.Burger, {
+  as: "burger",
+  foreignKey: { fieldName: "burgerId" },
+});
 
 module.exports = db;

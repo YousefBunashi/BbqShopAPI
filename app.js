@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 // Routes
 const bbqRoutes = require("./routes/bbqs");
 const burgerRoutes = require("./routes/burgers");
+const userRoutes = require("./routes/users");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/burgers", burgerRoutes);
 app.use("/bbqs", bbqRoutes);
+app.use(userRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 // Not found path
