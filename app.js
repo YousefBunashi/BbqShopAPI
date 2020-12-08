@@ -9,24 +9,24 @@ const { localStrategy } = require("./middleware/passport");
 const bodyParser = require("body-parser");
 const app = express();
 
-// Passport Setup
-app.use(passport.initialize());
-passport.use(localStrategy);
-// Routes
-const bbqRoutes = require("./routes/bbqs");
-const burgerRoutes = require("./routes/burgers");
-const userRoutes = require("./routes/users");
-
 // Middleware
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(passport.initialize());
+passport.use(localStrategy);
+
+passport.use(localStrategy);
+// Routes
+
+const bbqRoutes = require("./routes/bbqs");
+const burgerRoutes = require("./routes/burgers");
+const userRoutes = require("./routes/users");
+
 app.use("/burgers", burgerRoutes);
 app.use("/bbqs", bbqRoutes);
 app.use(userRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
-// app.use(passport.initialize());
-// passport.use(localStrategy);
 
 // Not found path
 app.use((req, res, next) => {

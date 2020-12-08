@@ -5,15 +5,15 @@ const LocalStrategy = require("passport-local").Strategy;
 
 exports.localStrategy = new LocalStrategy(async (username, password, done) => {
   try {
-    const user = await User.findOne({
+    const User = await User.findOne({
       where: { username },
     });
-    const passwordsMatch = user
-      ? await bcrypt.compare(password, user.password)
+    const passwordsMatch = User
+      ? await bcrypt.compare(password, User.password)
       : false;
 
     if (passwordsMatch) {
-      return done(null, user);
+      return done(null, User);
     }
     return done(null, false);
   } catch (error) {
