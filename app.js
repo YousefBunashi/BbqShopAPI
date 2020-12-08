@@ -3,15 +3,19 @@ const db = require("./db/models");
 const cors = require("cors");
 const SequelizeSlugify = require("sequelize-slugify");
 const path = require("path");
+const passport = require("passport");
+const { localStrategy } = require("./middleware/passport");
 
 const bodyParser = require("body-parser");
+const app = express();
 
+// Passport Setup
+app.use(passport.initialize());
+passport.use(localStrategy);
 // Routes
 const bbqRoutes = require("./routes/bbqs");
 const burgerRoutes = require("./routes/burgers");
 const userRoutes = require("./routes/users");
-
-const app = express();
 
 // Middleware
 
@@ -21,6 +25,8 @@ app.use("/burgers", burgerRoutes);
 app.use("/bbqs", bbqRoutes);
 app.use(userRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
+// app.use(passport.initialize());
+// passport.use(localStrategy);
 
 // Not found path
 app.use((req, res, next) => {
