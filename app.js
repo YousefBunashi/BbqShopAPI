@@ -4,7 +4,7 @@ const cors = require("cors");
 const SequelizeSlugify = require("sequelize-slugify");
 const path = require("path");
 const passport = require("passport");
-const { localStrategy } = require("./middleware/passport");
+const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const bbqRoutes = require("./routes/bbqs");
 const burgerRoutes = require("./routes/burgers");
 const userRoutes = require("./routes/users");
@@ -18,6 +18,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(passport.initialize());
 passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 // Routes
 
