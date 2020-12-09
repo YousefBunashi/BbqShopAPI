@@ -5,6 +5,9 @@ const SequelizeSlugify = require("sequelize-slugify");
 const path = require("path");
 const passport = require("passport");
 const { localStrategy } = require("./middleware/passport");
+const bbqRoutes = require("./routes/bbqs");
+const burgerRoutes = require("./routes/burgers");
+const userRoutes = require("./routes/users");
 
 const bodyParser = require("body-parser");
 const app = express();
@@ -16,12 +19,7 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 passport.use(localStrategy);
 
-passport.use(localStrategy);
 // Routes
-
-const bbqRoutes = require("./routes/bbqs");
-const burgerRoutes = require("./routes/burgers");
-const userRoutes = require("./routes/users");
 
 app.use("/burgers", burgerRoutes);
 app.use("/bbqs", bbqRoutes);
