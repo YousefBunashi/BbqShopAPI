@@ -7,6 +7,7 @@ const {
   bbqDelete,
   fetchBbq,
 } = require("../controllers/bbqController");
+const passport = require("passport");
 
 router.param("bbqId", async (req, res, next, bbqId) => {
   const bbq = await fetchBbq(bbqId, next);
@@ -23,8 +24,17 @@ router.param("bbqId", async (req, res, next, bbqId) => {
 router.get("/", bbqList);
 
 // bbq Update
-router.put("/:bbqId", upload.single("image"), bbqUpdate);
+router.put(
+  "/:bbqId",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  bbqUpdate
+);
 
 // Bbq Delete
-router.delete("/:bbqId", bbqDelete);
+router.delete(
+  "/:bbqId",
+  passport.authenticate("jwt", { session: false }),
+  bbqDelete
+);
 module.exports = router;

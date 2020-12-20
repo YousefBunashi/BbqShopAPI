@@ -1,6 +1,6 @@
 const SequelizeSlugify = require("sequelize-slugify");
 module.exports = (sequelize, DataTypes) => {
-  const Burger = sequelize.define("Burger", {
+  const Butchery = sequelize.define("Butchery", {
     name: {
       type: DataTypes.STRING,
     },
@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  SequelizeSlugify.slugifyModel(Burger, {
+  SequelizeSlugify.slugifyModel(Butchery, {
     source: ["name"],
   });
-  return Burger;
+  return Butchery;
 };

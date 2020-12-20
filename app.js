@@ -6,8 +6,9 @@ const path = require("path");
 const passport = require("passport");
 const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const bbqRoutes = require("./routes/bbqs");
-const burgerRoutes = require("./routes/burgers");
+const butcheryRoutes = require("./routes/butcheries");
 const userRoutes = require("./routes/users");
+const orderRoutes = require("./routes/orders");
 
 const bodyParser = require("body-parser");
 const app = express();
@@ -19,10 +20,11 @@ app.use(bodyParser.json());
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
+app.use(orderRoutes);
 
 // Routes
 
-app.use("/burgers", burgerRoutes);
+app.use("/butcheries", butcheryRoutes);
 app.use("/bbqs", bbqRoutes);
 app.use(userRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));

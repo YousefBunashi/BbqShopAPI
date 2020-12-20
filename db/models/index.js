@@ -3,6 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
+const Butchery = require("./Butchery");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
@@ -44,10 +45,24 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 // Relations
-db.Burger.hasMany(db.Bbq, { as: "bbqs", foreignKey: "burgerId" });
-db.Bbq.belongsTo(db.Burger, {
-  as: "burger",
-  foreignKey: { fieldName: "burgerId" },
+db.Butchery.hasMany(db.Bbq, { as: "bbqs", foreignKey: "butcheryId" });
+db.Bbq.belongsTo(db.Butchery, {
+  as: "butchery",
+  foreignKey: { fieldName: "butcheryId" },
 });
 
+db.User.hasMany(db.Butchery, { as: "butchery", foreignKey: "userId" });
+db.Butchery.belongsTo(db.User, { as: "user" });
+
+db.User.hasMany(db.Order, { as: "orders", foreignKey: "userId" });
+db.Order.belongsTo(db.User, { as: "user" });
+
+db.Order.belongsToMany(db.Bbq, {
+  through: db.OrderItem,
+  foreignKey: "orderId",
+});
+db.Bbq.belongsToMany(db.Order, {
+  through: db.OrderItem,
+  foreignKey: "bbqId",
+});
 module.exports = db;

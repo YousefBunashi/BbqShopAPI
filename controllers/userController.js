@@ -23,12 +23,16 @@ exports.signup = async (req, res, next) => {
   }
 };
 exports.signin = (req, res) => {
-  const { user } = req;
-  const payload = {
-    id: user.id,
-    username: user.username,
-    exp: Date.now() + 900000,
-  };
-  const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
-  res.json({ token });
+  try {
+    const { user } = req;
+    const payload = {
+      id: user.id,
+      username: user.username,
+      exp: Date.now() + 900000,
+    };
+    const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
+    res.json({ token });
+  } catch (error) {
+    next(error);
+  }
 };
